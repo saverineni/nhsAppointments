@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="offset-sm-3 col-sm-6">    
+    <br/>
+    <h6>Forgot Password</h6>
+    <br/>
+    <div>
+      <p>Enter the username that you used to register</p>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+          <div class="form-group row">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name"
+                    required
+                    [(ngModel)]="model.name" name="name"
+                    #name="ngModel">
+              
+          </div>
+        <input name="first" ngModel required #first="ngModel">
+        <input name="last" ngModel>
+        <button>Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

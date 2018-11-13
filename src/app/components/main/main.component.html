@@ -1,0 +1,75 @@
+  <div class="container">
+      <div class="offset-lg-2 col-lg-8">
+        <nav  class="offset-lg-2 col-lg-8 navbar navbar-dark bg-primary fixed-top">
+          <a class="navbar-brand" href="#">Welcome {{username}}</a>
+          <button class="navbar-toggler hidden-sm-down" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" 
+            data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse  pull-right" id="navbarsDefault">
+            <ul class="nav navbar-nav navbar-right pull-right">
+                <li><a class="nav-link" ><label (click)="deleteAllAppointments()" class="la la-trash"> Delete Appointments</label></a></li>
+                <li><a class="nav-link" [routerLink]="['/settings']"><i class="fa fa-cog"></i> Settings</a></li>
+                <li><a class="nav-link" ><label (click)="logout()" class="la la-trash"><i class="fa fa-sign-out"></i> Logout</label></a></li>                                
+              </ul>
+          </div>
+        </nav>
+        <br/><br/><br/>
+        <div class="row">          
+          <button type="button" (click)="open(content)" class="btn btn-outline-primary col-12" style="position: absolute; left: 0px;">Add Hospital</button>
+        </div>
+        <br/>
+        <br/>
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-basic-title">Profile update</h6>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #addhospitalform="ngForm">
+              <div class="form-group">
+                <input type="text" class="form-control" id="hospitalNumber" placeholder="Hospital number" required name="number" ngModel
+                pattern="\d*">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" id="hospitalName" placeholder="Hospital name" required name="name" ngModel>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" ngbAutofocus class="btn btn-outline-dark" (click)="modal.close(addhospitalform)" [disabled]="!addhospitalform.valid">Add Hospital</button>
+          </div>
+        </ng-template>
+        <h5>Appointments</h5>
+        <hr/>
+        <div *ngIf="fetching" class="loader"></div>        
+        <div *ngIf="userHospitalAppointments?.length > 0">
+          <div *ngFor="let userHospitalAppointment of userHospitalAppointments">
+            <div class="row">
+              <h6 class="col-6">{{userHospitalAppointment.hospitalName}}<span>({{userHospitalAppointment.hospitalId}})</span></h6>
+              <label class="col-6 text-muted" style="text-align: right; font-size: small;">Count:{{userHospitalAppointment?.appointments?.length}}</label>
+            </div>          
+
+            <div *ngIf="userHospitalAppointment?.appointments?.length == 0">
+                <label class="text-muted font-italic">No appointments.</label>
+            </div>
+            <div style="overflow-x: auto;-webkit-overflow-scrolling: touch;-ms-overflow-style: -ms-autohiding-scrollbar;background-color: gainsboro">              
+              <div class="row flex-row flex-nowrap card-group">
+                  <div class="col-xs-9 col-lg-3" *ngFor="let appointment of userHospitalAppointment.appointments" style="margin: 5px;">
+                      <div class="card border-light mb-3">
+                        <div class="card-header">{{appointment.dateOfAppointmentLong | date:'dd/MM/yyyy'}}</div>
+                        <div class="card-body text-dark">
+                          <h6 class="card-title">{{appointment.dateOfAppointmentLong | date:'EEE '}}{{appointment.timeOfAppointment}}</h6>
+                          <button class="btn btn-outline-dark" (click)="print(appointment)">print <i class="fa fa-print"></i></button>
+                        </div>
+                      </div>
+                  </div>                  
+              </div>
+            </div>            
+            <hr/>
+          </div>
+        </div>
+      </div>
+  </div>

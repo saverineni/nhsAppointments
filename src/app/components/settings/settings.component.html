@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="offset-sm-3 col-sm-6 justify-content-center align-items-center">     
+      <br/>
+      <h6>Update Account</h6>
+      <br/>
+      <form #settingsData="ngForm" (ngSubmit)="onSubmit(settingsData)">
+        <div class="form-group row">
+          <label for="firstnameId" class="col-4">Firstname</label>
+          <input type="text" class="form-control col-8" id="firstnameId" required name="firstName" [(ngModel)]="user.firstName"
+            pattern=".{8,}">
+        </div>
+        <div class="form-group row">
+          <label for="lastnameId" class="col-4">Lastname</label>
+          <input type="text" class="form-control col-8" id="lastnameId" required name="lastName" [(ngModel)]="user.lastName"
+          pattern=".{8,}">
+        </div>
+        
+        <div class="form-group row">
+            <label for="dobId" class="col-4">DOB</label>              
+            <input type="text" class="form-control col-8" id="dobId" [matDatepicker]="myDatepicker" readonly
+                  placeholder="DD/MM/YYYY" (click)="myDatepicker.open()" required name="dateOfBirth" [(ngModel)]="user.dateOfBirth">
+            <mat-datepicker #myDatepicker></mat-datepicker>
+        </div>
+        <div class="form-group row">
+          <label for="emailId" class="col-4">Email</label>
+          <input type="email" class="form-control col-8" id="emailId" required name="email" [(ngModel)]="user.email"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        </div>
+        <div class="form-group row">
+          <label for="usernameId" class="col-4">Username</label>
+          <input type="text" class="form-control col-8" id="usernameId" required name="username" [(ngModel)]="user.username" readonly
+          pattern=".{8,}">
+        </div>          
+        <button type="submit" class="btn btn-primary col">Update</button>
+      </form>
+      <button type="button" class="btn btn-link col" [routerLink]="['/main']">Back</button>
+    </div>
+  </div>
+  
